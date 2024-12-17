@@ -6,6 +6,9 @@ on:
       prompt:
         description: 'Prompt for the code generation'
         required: true
+      branch_name:
+        description: 'Branch name to checkout'
+        required: true
       openai_api_key:
         description: 'OpenAI API Key'
         required: true
@@ -20,6 +23,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Checkout New Branch
+        run: git checkout -b ${{ github.event.inputs.branch_name }}
 
       - name: Run Aider Docker Command
         run: docker run -rm --user $(id -u):$(id -g) --volume $(pwd):/app paulgauthier/aider --openai-api-key ${{ github.event.inputs.openai_api_key }} --message "${{ github.event.inputs.prompt }}" --yes-always --no-show-release-notes
