@@ -42,4 +42,11 @@ class GitUtils {
   }
 }
 
+if (require.main === module) {
+  const [,, command, branchName, message] = process.argv;
+  if (command === 'commitAndPush') {
+    GitUtils.commitAndPush(branchName, message);
+  }
+}
+
 module.exports = GitUtils;

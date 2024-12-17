@@ -43,4 +43,20 @@ class GitHubUtils {
   }
 }
 
+if (require.main === module) {
+  const [,, command, owner, branchName, title, body] = process.argv;
+  if (command === 'createPullRequest') {
+    const github = require('@actions/github');
+    const context = github.context;
+    GitHubUtils.createPullRequest(github, {
+      owner,
+      repo: context.repo.repo,
+      title,
+      body,
+      head: branchName,
+      base: 'main'
+    });
+  }
+}
+
 module.exports = GitHubUtils;
