@@ -13,6 +13,8 @@ jobs:
       issues: read
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: Trigger Issue Code Generator
         uses: ./.github/workflows/issue-code-generator.yml
         with:
