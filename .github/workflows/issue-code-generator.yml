@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       prompt:
-        description: 'Prompt for the code generation'
+        description: "Prompt for the code generation"
         required: true
       branch_name:
-        description: 'Branch name to checkout'
+        description: "Branch name to checkout"
         required: true
       openai_api_key:
-        description: 'OpenAI API Key'
+        description: "OpenAI API Key"
         required: true
 
 jobs:
@@ -30,8 +30,8 @@ jobs:
       - name: Run Aider Docker Command
         run: docker run -rm --user $(id -u):$(id -g) --volume $(pwd):/app paulgauthier/aider --openai-api-key ${{ github.event.inputs.openai_api_key }} --message "${{ github.event.inputs.prompt }}" --yes-always --no-show-release-notes
 
-      - name: Commit and Push Changes
-        run: node .github/scripts/utils/git.js commitAndPush ${{ github.event.inputs.branch_name }} "Automated code changes"
+      - name: Push Changes
+        run: git push
 
       - name: Create Pull Request
         run: node .github/scripts/utils/github.js createPullRequest ${{ github.repository_owner }} ${{ github.event.inputs.branch_name }} "${{ github.event.inputs.branch_name }}" "${{ github.event.inputs.prompt }}"
