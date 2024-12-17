@@ -1,0 +1,20 @@
+name: Issue Event Trigger
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  trigger-code-generator:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: read
+
+    steps:
+      - name: Trigger Issue Code Generator
+        uses: ./.github/workflows/issue-code-generator.yml
+        with:
+          prompt: ${{ github.event.issue.body }}
+          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
