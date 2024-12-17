@@ -15,7 +15,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Generate Code Solution
-        uses: ./ # Uses the local action
-        with:
-          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+      - name: Run Aider Docker Command
+        run: docker run --rm -v $(pwd):/app aider:latest
