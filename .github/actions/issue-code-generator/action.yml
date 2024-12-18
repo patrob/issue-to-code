@@ -29,7 +29,7 @@ runs:
 
     - name: Run Aider Docker Command
       shell: bash
-      run: docker run --rm --user $(id -u):$(id -g) --volume $(pwd):/app paulgauthier/aider --openai-api-key ${{ inputs.openai_api_key }} --message "${{ inputs.prompt }}" --yes-always --no-show-release-notes --multiline
+      run: docker run --rm --user $(id -u):$(id -g) --volume $(pwd):/app paulgauthier/aider --openai-api-key ${{ inputs.openai_api_key }} --message "${{ inputs.prompt }}\nAdd any files necessary." --yes-always --no-show-release-notes --multiline
 
     - name: Set Upstream Branch
       shell: bash
@@ -46,5 +46,5 @@ runs:
       run: |
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --global user.name "GitHub Actions Bot"
-        gh pr create --title "${{ inputs.pr_title }}" --body "Code generated from prompt:\n${{ inputs.prompt }}" --base main --head ${{ inputs.branch_name }}
+        gh pr create --title "${{ inputs.pr_title }}" --body "Code generated from prompt: ${{ inputs.prompt }}" --base main --head ${{ inputs.branch_name }}
 
