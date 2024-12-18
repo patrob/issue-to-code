@@ -33,7 +33,7 @@ runs:
 
     - name: Set Upstream Branch
       shell: bash
-      run: git --set-upstream origin ${{ inputs.branch_name }}
+      run: git push --set-upstream origin  ${{ inputs.branch_name }}
 
     - name: Push Changes
       shell: bash
