@@ -29,7 +29,7 @@ runs:
 
     - name: Run Aider Docker Command
       shell: bash
-      run: docker run --rm --user $(id -u):$(id -g) --volume $(pwd):/app paulgauthier/aider --openai-api-key ${{ inputs.openai_api_key }} --message "${{ inputs.prompt }}" --yes-always --no-show-release-notes
+      run: docker run --rm --user $(id -u):$(id -g) --volume $(pwd):/app paulgauthier/aider --openai-api-key ${{ inputs.openai_api_key }} --message "${{ inputs.prompt }}" --yes-always --no-show-release-notes --multiline
 
     - name: Set Upstream Branch
       shell: bash
