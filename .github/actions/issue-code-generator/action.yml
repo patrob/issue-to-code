@@ -31,6 +31,10 @@ runs:
       shell: bash
       run: docker run --rm --user $(id -u):$(id -g) --volume $(pwd):/app paulgauthier/aider --openai-api-key ${{ inputs.openai_api_key }} --message "${{ inputs.prompt }}" --yes-always --no-show-release-notes
 
+    - name: Set Upstream Branch
+      shell: bash
+      run: git --set-upstream origin ${{ inputs.branch_name }}
+
     - name: Push Changes
       shell: bash
       run: git push
