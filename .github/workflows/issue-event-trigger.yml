@@ -15,12 +15,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Get Branch Name
+        id: get_branch_name
+        run: |
+          branch_name="issue-${{ github.event.issue.number }}-$(echo ${{ github.event.issue.title }} | tr '[:upper:]' '[:lower:]' | tr ' ' '_')"
+          echo "::set-output name=branch_name::$branch_name"
+
       - name: Trigger Issue Code Generator
         uses: ./.github/actions/issue-code-generator
         with:
           prompt: ${{ github.event.issue.body }}
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
           pr_title: ${{ github.event.issue.title }}
-          branch_name: ${{ github.event.issue.number }}
+          branch_name: ${{ steps.get_branch_name.outputs.branch_name }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
