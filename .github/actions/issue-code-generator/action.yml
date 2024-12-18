@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Checkout New Branch
-        run: git checkout -b ${{ inputs.branch_name }}
+        run: git checkout -b ${{ workflow_call.inputs.branch_name }}
 
       - name: Run Aider Docker Command
         run: docker run -rm --user $(id -u):$(id -g) --volume $(pwd):/app paulgauthier/aider --openai-api-key ${{ inputs.openai_api_key }} --message "${{ inputs.prompt }}" --yes-always --no-show-release-notes
