@@ -3,24 +3,19 @@ name: Issue Code Generator
 on:
   workflow_call:
     inputs:
-      prompt:
-        description: "Prompt for the code generation"
+      prompt: # "Prompt for the code generation"
         required: true
         type: string
-      pr_title:
-        description: "Title for the pull request"
+      pr_title: # "Title for the pull request"
         required: true
         type: string
-      branch_name:
-        description: "Branch name to checkout"
+      branch_name: # "Branch name to checkout"
         required: true
         type: string
-      github_token:
-        description: "GitHub Token"
+      github_token: # "GitHub Token"
         required: true
         type: string
-      openai_api_key:
-        description: "OpenAI API Key"
+      openai_api_key: # "OpenAI API Key"
         required: true
         type: string
 
