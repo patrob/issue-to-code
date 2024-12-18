@@ -1,51 +1,45 @@
 name: Issue Code Generator
 
-on:
-  workflow_call:
-    inputs:
-      prompt: # "Prompt for the code generation"
-        required: true
-        type: string
-      pr_title: # "Title for the pull request"
-        required: true
-        type: string
-      branch_name: # "Branch name to checkout"
-        required: true
-        type: string
-      github_token: # "GitHub Token"
-        required: true
-        type: string
-      openai_api_key: # "OpenAI API Key"
-        required: true
-        type: string
+inputs:
+  prompt: # "Prompt for the code generation"
+    required: true
+    type: string
+  pr_title: # "Title for the pull request"
+    required: true
+    type: string
+  branch_name: # "Branch name to checkout"
+    required: true
+    type: string
+  github_token: # "GitHub Token"
+    required: true
+    type: string
+  openai_api_key: # "OpenAI API Key"
+    required: true
+    type: string
 
-jobs:
-  generate-code:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    defaults:
-      run:
-        shell: bash
+runs:
+  using: composite
+  defaults:
+    run:
+      shell: bash
 
-    steps:
-      - uses: actions/checkout@v4
+  steps:
+    - uses: actions/checkout@v4
 
-      - name: Checkout New Branch
-        run: git checkout -b ${{ inputs.branch_name }}
+    - name: Checkout New Branch
+      run: git checkout -b ${{ inputs.branch_name }}
 
-      - name: Run Aider Docker Command
-        run: docker run --rm --user $(id -u):$(id -g) --volume $(pwd):/app paulgauthier/aider --openai-api-key ${{ inputs.openai_api_key }} --message "${{ inputs.prompt }}" --yes-always --no-show-release-notes
+    - name: Run Aider Docker Command
+      run: docker run --rm --user $(id -u):$(id -g) --volume $(pwd):/app paulgauthier/aider --openai-api-key ${{ inputs.openai_api_key }} --message "${{ inputs.prompt }}" --yes-always --no-show-release-notes
 
-      - name: Push Changes
-        run: git push
+    - name: Push Changes
+      run: git push
 
-      - name: Create Pull Request
-        env:
-          GITHUB_TOKEN: ${{ inputs.github_token }}
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "GitHub Actions Bot"
-          gh pr create --title "${{ inputs.pr_title }}" --body "Code generated from prompt:\n${{ inputs.prompt }}" --base main --head ${{ inputs.branch_name }}
+    - name: Create Pull Request
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "GitHub Actions Bot"
+        gh pr create --title "${{ inputs.pr_title }}" --body "Code generated from prompt:\n${{ inputs.prompt }}" --base main --head ${{ inputs.branch_name }}
 
