@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Trigger Issue Code Generator
-        uses: ./issue-code-generator.yml
+        uses: ./.github/actions/issue-code-generator
         with:
           prompt: ${{ github.event.issue.body }}
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
