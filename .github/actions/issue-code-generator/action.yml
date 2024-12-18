@@ -1,7 +1,7 @@
 name: Issue Code Generator
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       prompt:
         description: "Prompt for the code generation"
