@@ -5,12 +5,15 @@ on:
     inputs:
       prompt: # "Prompt for the code generation"
         required: true
+        default: "Create a new shell script file that prints 'Hello, World!'"
         type: string
       pr_title: # "Title for the pull request"
         required: true
+        default: "Hello world"
         type: string
       branch_name: # "Branch name to checkout"
         required: true
+        default: "hello-world"
         type: string
 
 jobs:
