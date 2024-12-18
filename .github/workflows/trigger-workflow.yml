@@ -40,7 +40,7 @@ jobs:
         run: git checkout -b ${{ inputs.branch_name }}
 
       - name: Run Aider Docker Command
-        run: docker run --rm -it --user $(id -u):$(id -g) --volume $(pwd):/app paulgauthier/aider --openai-api-key ${{ secrets.OPENAI_API_KEY }} --message "${{ inputs.prompt }}" --yes-always --no-show-release-notes
+        run: docker run --rm --user $(id -u):$(id -g) --volume $(pwd):/app paulgauthier/aider --openai-api-key ${{ secrets.OPENAI_API_KEY }} --message "${{ inputs.prompt }}" --yes-always --no-show-release-notes
 
       - name: Push Changes
         run: git push
