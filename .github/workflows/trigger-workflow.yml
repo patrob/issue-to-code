@@ -42,6 +42,9 @@ jobs:
       - name: Run Aider Docker Command
         run: docker run --rm --user $(id -u):$(id -g) --volume $(pwd):/app paulgauthier/aider --openai-api-key ${{ secrets.OPENAI_API_KEY }} --message "${{ inputs.prompt }}" --yes-always --no-show-release-notes
 
+      - name: Set Upstream Branch
+        run: git push --set-upstream origin ${{ inputs.branch_name }}
+
       - name: Push Changes
         run: git push
 
